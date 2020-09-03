@@ -1,4 +1,4 @@
-type: maven
+type: npm
 pipelineAdministrators:
   - 868562
   - 856105
