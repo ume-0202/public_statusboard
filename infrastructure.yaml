@@ -16,5 +16,5 @@ appservice:
         site_config:
         - always_on: true
           app_command_line: "java -jar /home/site/wwwroot/*.jar"
-          linux_fx_version: JAVA|11-java11
+          linux_fx_version: node|12-LTS
     version: appservice-v2.3.1
