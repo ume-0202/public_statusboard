@@ -1,0 +1,8 @@
+deployment_info:
+  service_principal:
+    client_id: 3b8adb72-a28c-412b-87b6-fdb808d98b18
+  resource_group: cstrm-n-statusboard-rg
+  vra_ids:
+    rg_deployment_id: 566ef1de-fb3e-4507-bb32-f6d63d94ab69
+    sp_and_rg_deployment_id: 6a984018-e903-4564-99d7-639290cb9686
+    sp_deployment_id: 8a895deb-f949-48a6-956b-a4b3bc508d5e

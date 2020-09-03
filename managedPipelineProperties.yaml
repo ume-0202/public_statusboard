@@ -1,0 +1,32 @@
+type: maven
+pipelineAdministrators:
+  - 868562
+container:
+  image: artifacts.aa.com/docker-prod/edots-base-jdk11:3.11.9
+integrationBranches:
+  - '*'
+provider:
+  azure:
+    azurerm: 
+      resource_group_name: cstrm-n-statusboard-rg
+      storage_account_name: tfstatusboarlhj3v42l
+      container_name: tfstate
+
+env:
+  variables:
+    ARM_SKIP_PROVIDER_REGISTRATION: true
+
+deployInfra: yamlit_terraform
+deployApp: appservice
+    
+CD:
+  deployments:
+    dev:
+      servicePrincipalCredJenkins: service_principal_nonprod
+      app:
+        - name: statusboard-dev
+          resourceGroup: cstrm-n-statusboard-rg 
+      sourceBranches:
+        - '*'
+      subscription: aa-cstrm-spoke
+  

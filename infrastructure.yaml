@@ -1,0 +1,20 @@
+remote-state:
+    container_name: tfstate
+    key: ENVIRONMENT-statusboard-tmp.tfstate
+    storage_account_name: tfstatusboarlhj3v42l
+    resource_group_name: cstrm-n-statusboard-rg
+appservice:
+    appservice_plan_name: ASP-statusboard-ENVIRONMENT
+    appservice_plan_tier: Standard
+    appservice_plan_size: S1
+    appservice_plan_kind: Linux
+    resource_group_name: cstrm-n-statusboard-rg
+    appservice_plan_reserved: true
+    appservice:
+      appservice-1:
+        appservice_name: statusboard-ENVIRONMENT
+        site_config:
+        - always_on: true
+          app_command_line: "java -jar /home/site/wwwroot/*.jar"
+          linux_fx_version: JAVA|11-java11
+    version: appservice-v2.3.1
