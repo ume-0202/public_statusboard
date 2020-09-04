@@ -39,8 +39,8 @@ describe('getUserInfoEndpoint', () => {
   });
 
   it('returns a different client id for production', () => {
-    const prodClientId = 'InnerSource-test';
-    const otherClientId = 'InnerSource-test';
+    const prodClientId = 'statusboard';
+    const otherClientId = 'statusboard-dev';
 
     process.env.NODE_ENV = 'production';
     let { getClientId } = require('../../helpers/authHelper');

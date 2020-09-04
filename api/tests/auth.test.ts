@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-var-requires, global-require, @typescript-eslint/no-explicit-any */
 import 'jest';
 import supertest from 'supertest';
@@ -22,7 +23,7 @@ describe('auth middleware', () => {
 
     const next = jest.fn();
 
-    auth.uiAuthenticationMiddleware(req, null, next);
+    auth.authentication401Middleware(req, null, next);
     expect(next).toBeCalled();
   });
 
@@ -39,7 +40,7 @@ describe('auth middleware', () => {
 
     const next = jest.fn();
 
-    auth.apiAuthenticationMiddleware(req, res, next);
+    auth.authentication401Middleware(req, res, next);
     expect(res.status).toBeCalledWith(401);
     expect(send).toBeCalled();
     expect(next).not.toBeCalled();
@@ -52,19 +53,13 @@ describe('auth middleware', () => {
 
     const next = jest.fn();
 
-    auth.apiAuthenticationMiddleware(req, null, next);
+    auth.authentication401Middleware(req, null, next);
     expect(next).toBeCalled();
   });
 
   it('logout', (done) => {
     process.env.NODE_ENV = 'development';
     process.env.FORCE_SSO = 'true';
-    const middlewareSpy = jest
-      .spyOn(auth, 'uiAuthenticationMiddleware')
-      .mockImplementation((req: any, re: any, next: any) => {
-        next();
-      });
-
     const { app } = require('../app');
     supertest(app)
       .get('/auth/logout')

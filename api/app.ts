@@ -19,7 +19,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use(ssoAuth);
 
 // Put routes that have special authentication here
-app.use('/backend', routes); // Returns an HTTP 401 if not already authenticated for all routes except /backend/health
+app.use('/api', routes); // Returns an HTTP 401 if not already authenticated for all routes except /backend/health
 
 // Enable auth for all remaining routes
 if (process.env.NODE_ENV !== 'test' && (process.env.NODE_ENV === 'production' || process.env.FORCE_SSO === 'true')) {

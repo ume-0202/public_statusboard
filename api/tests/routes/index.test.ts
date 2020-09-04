@@ -12,7 +12,7 @@ describe('/api (auth)', () => {
     process.env.NODE_ENV = 'development';
     process.env.FORCE_SSO = 'true';
 
-    // Silence output
+    // Silence output 
     logger.info = jest.fn();
   });
 

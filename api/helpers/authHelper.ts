@@ -20,9 +20,9 @@ export const getLogoutEndpoint = (): string => {
 
 export const getClientId = (): string => {
   if (process.env.NODE_ENV === 'production') {
-    return '{{cookiecutter.clientIdProd}}';
+    return 'statusboard';
   }
-  return '{{cookiecutter.clientIdNonProd}}';
+  return 'statusboard-dev';
 };
 
 export const getUserInfoEndpoint = (): string => `${getIdpBaseUrl()}/idp/userinfo.openid`;
