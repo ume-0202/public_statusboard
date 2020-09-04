@@ -2,7 +2,7 @@ type: npm
 pipelineAdministrators:
   - 868562
   - 856105
-  - 050904
+  - 50904
 container:
   image: artifacts.aa.com/docker-prod/edots-base-jdk11:3.11.9
 integrationBranches:
@@ -38,4 +38,3 @@ CD:
       sourceBranches:
         - '*'
       subscription: aa-cstrm-spoke
-  
