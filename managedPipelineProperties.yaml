@@ -1,4 +1,5 @@
 type: npm
+apiVersion: 1.6.97
 pipelineAdministrators:
   - '868562'
   - '856105'
