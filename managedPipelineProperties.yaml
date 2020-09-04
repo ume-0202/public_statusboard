@@ -1,8 +1,8 @@
 type: npm
 pipelineAdministrators:
-  - 868562
-  - 856105
-  - 50904
+  - '868562'
+  - '856105'
+  - '050904'
 container:
   image: artifacts.aa.com/docker-prod/edots-base-jdk11:3.11.9
 integrationBranches:
@@ -25,8 +25,8 @@ CI:
   post:
     - name: 'linting and style'
       steps: |
-        sh 'npm run lint'
-        sh 'npm run checkstyle'
+        'sh npm run lint'
+        'sh npm run checkstyle'
 
 CD:
   deployments:
