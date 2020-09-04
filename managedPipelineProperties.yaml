@@ -26,7 +26,7 @@ CI:
     - name: 'linting and style'
       steps: |
         sh 'npm run lint'
-        'sh 'npm run checkstyle'
+        sh 'npm run checkstyle'
 
 CD:
   deployments:
