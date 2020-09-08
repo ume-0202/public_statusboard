@@ -8,7 +8,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "files": [ "dist/", "build/", "node_modules/" ],
+  "files": [ "dist/", "build/", "node_modules/", "deploy.sh", ".deployment" ],
   "scripts": {
     "api:dev": "npm-run-all -l api:build -p api:build:watch api:start:watch",
     "api:start": "node dist/index.js",
