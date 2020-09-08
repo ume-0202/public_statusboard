@@ -27,7 +27,7 @@
     "checkstyle": "prettier -l \"api/**/*.ts\" \"src/**/*.{tsx,ts,css}\"",
     "checkstyle:fix": "npm run checkstyle -- --write",
     "test": "npm-run-all api:test:coverage ui:test",
-    "start": "node dist/index.js"
+    "start": "npm-run-all ui:build api:build api:start"
   },
   "engines": {
     "node": ">=11.0.0"
