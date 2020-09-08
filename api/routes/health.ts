@@ -1,11 +1,11 @@
-import express from 'express';
+import express from "express";
 
 const router = express.Router();
-router.get('/health', (_, res) => {
+router.get("/health", (_, res) => {
   res.send({
-    status: 'ok',
-    details: 'Everything is just peachy 🍑',
-    time: new Date().toISOString(),
+    status: "ok",
+    details: "Everything is just peachy 🍑",
+    time: new Date().toISOString()
   });
 });
 

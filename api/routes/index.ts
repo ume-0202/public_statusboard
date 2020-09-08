@@ -1,7 +1,7 @@
-import express from 'express';
-import health from './health';
-import { authentication401Middleware } from '../auth';
-import logger from '../logger';
+import express from "express";
+import health from "./health";
+import { authentication401Middleware } from "../auth";
+import logger from "../logger";
 
 const routes = express.Router();
 
@@ -9,8 +9,13 @@ const routes = express.Router();
 routes.use(health);
 
 // Enable auth for all route declarations below
-if (process.env.NODE_ENV !== 'test' && (process.env.NODE_ENV === 'production' || process.env.FORCE_SSO === 'true')) {
-  logger.info(`SSO Auth Enabled for backend middleware (Forced: ${process.env.FORCE_SSO})`);
+if (
+  process.env.NODE_ENV !== "test" &&
+  (process.env.NODE_ENV === "production" || process.env.FORCE_SSO === "true")
+) {
+  logger.info(
+    `SSO Auth Enabled for backend middleware (Forced: ${process.env.FORCE_SSO})`
+  );
   routes.use(authentication401Middleware);
 }
 

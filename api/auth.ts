@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import express, { NextFunction } from 'express';
-import session from 'express-session';
-import passport from 'passport';
-import fetch from 'node-fetch';
-import OAuth2Strategy from 'passport-oauth2';
-import logger from './logger';
+import express, { NextFunction } from "express";
+import session from "express-session";
+import passport from "passport";
+import fetch from "node-fetch";
+import OAuth2Strategy from "passport-oauth2";
+import logger from "./logger";
 import {
   getLogoutEndpoint,
   getAuthEndpoint,
   getTokenEndpoint,
   getClientId,
-  getUserInfoEndpoint,
-} from './helpers/authHelper';
+  getUserInfoEndpoint
+} from "./helpers/authHelper";
 
 // General Auth Flow
 // Login: app -> IDP -> SiteMinder (create session) -> IDP (create session) -> app (create session)
@@ -19,32 +19,38 @@ import {
 
 export const ssoAuth = express.Router();
 
-const authenticateError = (err: { name: string }, _req: express.Request, res: express.Response): void => {
+const authenticateError = (
+  err: { name: string },
+  _req: express.Request,
+  res: express.Response
+): void => {
   // custom error handler to catch any errors, such as TokenError
-  logger.error('Error in authentication callback:', err);
-  if (err.name === 'TokenError') {
+  logger.error("Error in authentication callback:", err);
+  if (err.name === "TokenError") {
     // TODO: Display error message to user
-    res.redirect('/auth/'); // redirect them back to the login page
+    res.redirect("/auth/"); // redirect them back to the login page
   } else {
     // TODO: handle other errors here
     throw err;
   }
-  res.send('Invalid response from auth proivder.');
+  res.send("Invalid response from auth proivder.");
 };
 
-const authenticateSuccess = (_req: express.Request, res: express.Response): void => {
+const authenticateSuccess = (
+  _req: express.Request,
+  res: express.Response
+): void => {
   // TODO: Find the path for the last request and use that for the redirect uri
-  res.redirect('/');
+  res.redirect("/");
 };
-
 
 ssoAuth.use(
   session({
-    secret: process.env.SESSION_SECRET || 'shhhhh this is secret',
+    secret: process.env.SESSION_SECRET || "shhhhh this is secret",
     resave: false,
     saveUninitialized: true,
-    cookie: { maxAge: 1200000, secure: process.env.NODE_ENV === 'production' }, // Require cookie to use SSL
-  }),
+    cookie: { maxAge: 1200000, secure: process.env.NODE_ENV === "production" } // Require cookie to use SSL
+  })
 );
 
 // Initialize middleware (runs once)
@@ -53,11 +59,14 @@ ssoAuth.use(passport.session());
 
 // Create a listener to save new session details for users after auth
 ssoAuth.use(
-  '/auth/callback',
+  "/auth/callback",
   // Register middleware for auth
-  passport.authenticate('oauth2', { session: true, successReturnToOrRedirect: '/' }),
+  passport.authenticate("oauth2", {
+    session: true,
+    successReturnToOrRedirect: "/"
+  }),
   authenticateError,
-  authenticateSuccess,
+  authenticateSuccess
 );
 
 const tokenToProfile = async (
@@ -66,15 +75,15 @@ const tokenToProfile = async (
   _refreshToken: string,
   _params: { id_token: string },
   _profile: object,
-  done: OAuth2Strategy.VerifyCallback,
+  done: OAuth2Strategy.VerifyCallback
 ): Promise<void> => {
   const res = await fetch(getUserInfoEndpoint(), {
-    method: 'POST',
-    headers: { authorization: `Bearer ${accessToken}` },
+    method: "POST",
+    headers: { authorization: `Bearer ${accessToken}` }
   });
 
   if (!res.ok) {
-    done(new Error('Cannot get user information'));
+    done(new Error("Cannot get user information"));
     return;
   }
 
@@ -88,12 +97,12 @@ const strategy = new OAuth2Strategy(
     authorizationURL: getAuthEndpoint(),
     tokenURL: getTokenEndpoint(),
     clientID: getClientId(),
-    clientSecret: '',
-    callbackURL: '/auth/callback',
-    scope: 'openid',
-    passReqToCallback: true, // Sends the original request as the redirect after auth
+    clientSecret: "",
+    callbackURL: "/auth/callback",
+    scope: "openid",
+    passReqToCallback: true // Sends the original request as the redirect after auth
   },
-  tokenToProfile,
+  tokenToProfile
 );
 
 passport.use(strategy);
@@ -115,9 +124,13 @@ passport.deserializeUser(async (user, done) => {
  * @param res the express response object (optional)
  * @param next the express next function (optional)
  */
-export const authenticationLoginMiddleware = (req: express.Request, res?: express.Response, next?: NextFunction): void => {
+export const authenticationLoginMiddleware = (
+  req: express.Request,
+  res?: express.Response,
+  next?: NextFunction
+): void => {
   if (!req.isAuthenticated()) {
-    passport.authenticate('oauth2')(req, res, next);
+    passport.authenticate("oauth2")(req, res, next);
     return;
   }
   next();
@@ -130,9 +143,13 @@ export const authenticationLoginMiddleware = (req: express.Request, res?: expres
  * @param res the express response object (optional)
  * @param next the express next function (optional)
  */
-export const authentication401Middleware = (req: express.Request, res?: express.Response, next?: NextFunction): void => {
+export const authentication401Middleware = (
+  req: express.Request,
+  res?: express.Response,
+  next?: NextFunction
+): void => {
   if (!req.isAuthenticated()) {
-    res.status(401).send('Unauthorized');
+    res.status(401).send("Unauthorized");
     return;
   }
 
@@ -141,6 +158,6 @@ export const authentication401Middleware = (req: express.Request, res?: express.
 
 // TODO: Session time outs
 
-ssoAuth.get('/auth/logout', (req, res) => {
+ssoAuth.get("/auth/logout", (req, res) => {
   req.session.destroy(() => res.redirect(getLogoutEndpoint()));
 });

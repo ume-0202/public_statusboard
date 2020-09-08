@@ -1,6 +1,6 @@
-import * as winston from 'winston';
+import * as winston from "winston";
 
-const level = process.env.LOG_LEVEL || 'debug';
+const level = process.env.LOG_LEVEL || "debug";
 
 // Winston Logging Levels
 // 0: emerg
@@ -12,23 +12,23 @@ const level = process.env.LOG_LEVEL || 'debug';
 // 6: info
 // 7: debug
 
-const simpleErrorFormat = winston.format((info) => {
+const simpleErrorFormat = winston.format(info => {
   const newInfo = { ...info };
-  if (newInfo.level.includes('error')) {
+  if (newInfo.level.includes("error")) {
     if (newInfo.stack) {
       const stack = newInfo.stack
-        .split('\n')
+        .split("\n")
         .slice(1)
-        .join('\n');
+        .join("\n");
 
       newInfo.message += `\n${stack}`;
     }
 
     if (newInfo.data) {
       const data = JSON.stringify(newInfo.data, null, 4)
-        .split('\n')
-        .map((line) => `    ${line}`)
-        .join('\n');
+        .split("\n")
+        .map(line => `    ${line}`)
+        .join("\n");
       newInfo.message += `\n${data}`;
     }
 
@@ -45,7 +45,7 @@ const logger = winston.createLogger({
     winston.format.colorize(),
     winston.format.splat(),
     simpleErrorFormat(),
-    winston.format.simple(),
+    winston.format.simple()
   ),
   transports: [new winston.transports.Console({ level })],
   levels: {
@@ -56,8 +56,8 @@ const logger = winston.createLogger({
     warning: 4,
     notice: 5,
     info: 6,
-    debug: 7,
-  },
+    debug: 7
+  }
 });
 
 export default logger;
