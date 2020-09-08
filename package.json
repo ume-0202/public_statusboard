@@ -1,6 +1,6 @@
 {
   "name": "statusboard",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "Status board for American Airlines IT - displays a summary of system status in a hierarchy from the product portfolio through individual infrastructure components at a glance, with optional incident messaging.",
   "old-scripts": {
     "start": "react-scripts start",
@@ -8,7 +8,13 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "files": [ "dist/", "build/", "node_modules/", "deploy.sh", ".deployment" ],
+  "files": [
+    "dist/",
+    "build/",
+    "node_modules/",
+    "deploy.sh",
+    ".deployment"
+  ],
   "scripts": {
     "api:dev": "npm-run-all -l api:build -p api:build:watch api:start:watch",
     "api:start": "node dist/index.js",
@@ -31,7 +37,7 @@
     "start": "node dist/index.js"
   },
   "engines": {
-    "node": ">=11.0.0"
+    "node": "12.x"
   },
   "private": true,
   "dependencies": {
