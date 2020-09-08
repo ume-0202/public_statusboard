@@ -28,6 +28,7 @@ CI:
       steps: |
         sh 'npm run lint'
         sh 'npm run checkstyle'
+        sh 'npm run build'
 
 CD:
   deployments:
